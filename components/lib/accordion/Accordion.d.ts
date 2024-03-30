@@ -42,7 +42,7 @@ export interface AccordionPassThroughMethodOptions {
     /**
      * Defines passthrough(pt) options in global config.
      */
-    global: object | undefined;
+    global: Record<string, any>;
 }
 /**
  * Custom tab open event.

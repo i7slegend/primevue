@@ -47,7 +47,7 @@ export interface GalleriaPassThroughMethodOptions {
     /**
      * Defines passthrough(pt) options in global config.
      */
-    global: object | undefined;
+    global: Record<string, any>;
 }
 
 export interface GalleriaResponsiveOptions {

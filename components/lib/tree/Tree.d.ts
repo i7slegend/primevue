@@ -42,7 +42,7 @@ export interface TreePassThroughMethodOptions<T = any> {
     /**
      * Defines passthrough(pt) options in global config.
      */
-    global: object | undefined;
+    global: Record<string, any>;
 }
 
 /**

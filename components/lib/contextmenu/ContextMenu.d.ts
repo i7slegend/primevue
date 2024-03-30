@@ -49,7 +49,7 @@ export interface ContextMenuPassThroughMethodOptions {
     /**
      * Defines passthrough(pt) options in global config.
      */
-    global: object | undefined;
+    global: Record<string, any>;
 }
 
 /**

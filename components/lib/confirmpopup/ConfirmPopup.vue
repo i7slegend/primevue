@@ -117,18 +117,18 @@ export default {
                 this.confirmation.accept();
             }
 
-            this.visible = false;
+            this.onHide(true);
         },
         reject() {
             if (this.confirmation.reject) {
                 this.confirmation.reject();
             }
 
-            this.visible = false;
+            this.onHide(true);
         },
-        onHide() {
+        onHide(confirmationButton = false) {
             if (this.confirmation.onHide) {
-                this.confirmation.onHide();
+                this.confirmation.onHide(confirmationButton);
             }
 
             this.visible = false;
@@ -193,11 +193,7 @@ export default {
             if (!this.outsideClickListener) {
                 this.outsideClickListener = (event) => {
                     if (this.visible && this.container && !this.container.contains(event.target) && !this.isTargetClicked(event)) {
-                        if (this.confirmation.onHide) {
-                            this.confirmation.onHide();
-                        }
-
-                        this.visible = false;
+                        this.onHide();
                     } else {
                         this.alignOverlay();
                     }

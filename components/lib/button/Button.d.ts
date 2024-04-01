@@ -31,6 +31,10 @@ export interface ButtonPassThroughMethodOptions<T> {
      */
     context: ButtonContext;
     /**
+     * Defines valid attributes.
+     */
+    attrs: any;
+    /**
      * Defines parent instance.
      */
     parent: T;

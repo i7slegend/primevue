@@ -41,18 +41,26 @@ describe('InputNumber.vue', () => {
         expect(wrapper.find('input.p-inputnumber-input').attributes()['aria-valuenow']).toBe('12');
     });
 
-    it('is keypress called when pressed a number', async () => {
+    it('is keydown called when pressed a number', async () => {
         wrapper.find('input.p-inputnumber-input').element.setSelectionRange(2, 2);
 
-        await wrapper.vm.onInputKeyPress({ which: 49, preventDefault: () => {} });
+        await wrapper.vm.onInputKeyDown({ code: 'Digit1', key: '1', target: { value: '12' }, preventDefault: () => {} });
 
         expect(wrapper.emitted().input[0][0].value).toBe(11);
     });
 
-    it('is keypress called when pressed minus', async () => {
+    it('is keydown called when pressed numpad subtract', async () => {
         wrapper.find('input.p-inputnumber-input').element.setSelectionRange(0, 0);
 
-        await wrapper.vm.onInputKeyPress({ keyCode: 45, preventDefault: () => {} });
+        await wrapper.vm.onInputKeyDown({ code: 'NumpadSubtract', key: '-', target: { value: '11' }, preventDefault: () => {} });
+
+        expect(wrapper.emitted().input[0][0].value).toBe(-1);
+    });
+
+    it('is keydown called when pressed minus', async () => {
+        wrapper.find('input.p-inputnumber-input').element.setSelectionRange(0, 0);
+
+        await wrapper.vm.onInputKeyDown({ code: 'Minus', key: '-', target: { value: '11' }, preventDefault: () => {} });
 
         expect(wrapper.emitted().input[0][0].value).toBe(-1);
     });

@@ -58,7 +58,7 @@ import EyeSlashIcon from 'primevue/icons/eyeslash';
 import InputText from 'primevue/inputtext';
 import OverlayEventBus from 'primevue/overlayeventbus';
 import Portal from 'primevue/portal';
-import { ConnectedOverlayScrollHandler, DomHandler, UniqueComponentId, ZIndexUtils } from 'primevue/utils';
+import { ConnectedOverlayScrollHandler, DomHandler, ZIndexUtils, useUniqueId } from 'primevue/utils';
 import BasePassword from './BasePassword.vue';
 
 export default {
@@ -66,23 +66,21 @@ export default {
     extends: BasePassword,
     inheritAttrs: false,
     emits: ['update:modelValue', 'change', 'focus', 'blur', 'invalid'],
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     data() {
         return {
-            id: this.$attrs.id,
             overlayVisible: false,
             meter: null,
             infoText: null,
             focused: false,
             unmasked: false
         };
-    },
-    watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        }
     },
     mediumCheckRegExp: null,
     strongCheckRegExp: null,

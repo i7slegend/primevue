@@ -64,7 +64,7 @@ import WindowMaximizeIcon from 'primevue/icons/windowmaximize';
 import WindowMinimizeIcon from 'primevue/icons/windowminimize';
 import Portal from 'primevue/portal';
 import Ripple from 'primevue/ripple';
-import { DomHandler, UniqueComponentId, ZIndexUtils } from 'primevue/utils';
+import { DomHandler, ZIndexUtils, UniqueComponentId, useUniqueId } from 'primevue/utils';
 import { computed } from 'vue';
 import BaseDialog from './BaseDialog.vue';
 
@@ -73,6 +73,13 @@ export default {
     extends: BaseDialog,
     inheritAttrs: false,
     emits: ['update:visible', 'show', 'hide', 'after-hide', 'maximize', 'unmaximize', 'dragend'],
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     provide() {
         return {
             dialogRef: computed(() => this._instance)
@@ -80,20 +87,11 @@ export default {
     },
     data() {
         return {
-            id: this.$attrs.id,
             containerVisible: this.visible,
             maximized: false,
             focusableMax: null,
             focusableClose: null
         };
-    },
-    watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        }
     },
     documentKeydownListener: null,
     container: null,

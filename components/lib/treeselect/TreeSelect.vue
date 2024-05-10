@@ -111,7 +111,7 @@ import OverlayEventBus from 'primevue/overlayeventbus';
 import Portal from 'primevue/portal';
 import Ripple from 'primevue/ripple';
 import Tree from 'primevue/tree';
-import { ConnectedOverlayScrollHandler, DomHandler, UniqueComponentId, ZIndexUtils } from 'primevue/utils';
+import { ConnectedOverlayScrollHandler, DomHandler, ZIndexUtils, useUniqueId } from 'primevue/utils';
 import BaseTreeSelect from './BaseTreeSelect.vue';
 
 export default {
@@ -119,21 +119,21 @@ export default {
     extends: BaseTreeSelect,
     inheritAttrs: false,
     emits: ['update:modelValue', 'before-show', 'before-hide', 'change', 'show', 'hide', 'node-select', 'node-unselect', 'node-expand', 'node-collapse', 'focus', 'blur'],
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     data() {
         return {
-            id: this.$attrs.id,
             focused: false,
             overlayVisible: false,
             expandedKeys: {}
         };
     },
     watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        },
         modelValue: {
             handler: function () {
                 if (!this.selfChange) {

@@ -58,7 +58,7 @@
 import BaseComponent from 'primevue/basecomponent';
 import Ripple from 'primevue/ripple';
 import Tooltip from 'primevue/tooltip';
-import { DomHandler, ObjectUtils, UniqueComponentId } from 'primevue/utils';
+import { DomHandler, ObjectUtils, useUniqueId } from 'primevue/utils';
 import { mergeProps } from 'vue';
 
 export default {
@@ -66,6 +66,13 @@ export default {
     hostName: 'Dock',
     extends: BaseComponent,
     emits: ['focus', 'blur'],
+    setup(props) {
+        const { id } = useUniqueId(toRef(props, 'menuId'));
+
+        return {
+            id
+        }
+    },
     props: {
         position: {
             type: String,
@@ -99,19 +106,10 @@ export default {
     },
     data() {
         return {
-            id: this.menuId,
             currentIndex: -3,
             focused: false,
             focusedOptionIndex: -1
         };
-    },
-    watch: {
-        menuId: {
-            immediate: true,
-            handler(newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        }
     },
     methods: {
         getItemId(index) {

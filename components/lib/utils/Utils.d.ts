@@ -1,3 +1,5 @@
+import type { ComponentPublicInstance, Ref, MaybeRefOrGetter } from 'vue';
+
 export declare class ConnectedOverlayScrollHandler {
     constructor(element: any, listener?: () => void);
     bindScrollListener(): void;
@@ -119,6 +121,7 @@ export declare namespace ZIndexUtils {
 }
 
 export declare function UniqueComponentId(prefix?: string): string;
+export declare function useUniqueId(refOrGetter?: MaybeRefOrGetter): { id: Ref<string> };
 
 export declare function EventBus(): {
     on(type: string, fn: any): void;

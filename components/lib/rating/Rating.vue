@@ -52,7 +52,7 @@
 import BanIcon from 'primevue/icons/ban';
 import StarIcon from 'primevue/icons/star';
 import StarFillIcon from 'primevue/icons/starfill';
-import { DomHandler, UniqueComponentId } from 'primevue/utils';
+import { DomHandler, useUniqueId } from 'primevue/utils';
 import BaseRating from './BaseRating.vue';
 
 export default {
@@ -60,20 +60,18 @@ export default {
     extends: BaseRating,
     inheritAttrs: false,
     emits: ['update:modelValue', 'change', 'focus', 'blur'],
+    setup(props, { attrs }) {
+        const { id } = useUniqueId(() => attrs.name);
+
+        return {
+            name: id
+        }
+    },
     data() {
         return {
-            name: this.$attrs.name,
             focusedOptionIndex: -1,
             isFocusVisibleItem: true
         };
-    },
-    watch: {
-        '$attrs.name': {
-            immediate: true,
-            handler: function (newValue) {
-                this.name = newValue || UniqueComponentId();
-            }
-        }
     },
     methods: {
         getPTOptions(key, value) {

@@ -195,7 +195,7 @@ import AngleLeftIcon from 'primevue/icons/angleleft';
 import AngleRightIcon from 'primevue/icons/angleright';
 import AngleUpIcon from 'primevue/icons/angleup';
 import Ripple from 'primevue/ripple';
-import { DomHandler, ObjectUtils, UniqueComponentId } from 'primevue/utils';
+import { DomHandler, ObjectUtils, UniqueComponentId, useUniqueId } from 'primevue/utils';
 import BasePickList from './BasePickList.vue';
 
 export default {
@@ -208,9 +208,15 @@ export default {
     styleElement: null,
     media: null,
     mediaChangeListener: null,
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     data() {
         return {
-            id: this.$attrs.id,
             d_selection: this.selection,
             focused: {
                 sourceList: false,
@@ -221,12 +227,6 @@ export default {
         };
     },
     watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        },
         selection(newValue) {
             this.d_selection = newValue;
         },

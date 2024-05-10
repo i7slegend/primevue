@@ -84,7 +84,7 @@ import AngleDoubleUpIcon from 'primevue/icons/angledoubleup';
 import AngleDownIcon from 'primevue/icons/angledown';
 import AngleUpIcon from 'primevue/icons/angleup';
 import Ripple from 'primevue/ripple';
-import { DomHandler, ObjectUtils, UniqueComponentId } from 'primevue/utils';
+import { DomHandler, ObjectUtils, UniqueComponentId, useUniqueId } from 'primevue/utils';
 import BaseOrderList from './BaseOrderList.vue';
 
 export default {
@@ -96,21 +96,19 @@ export default {
     reorderDirection: null,
     styleElement: null,
     list: null,
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     data() {
         return {
-            id: this.$attrs.id,
             d_selection: this.selection,
             focused: false,
             focusedOptionIndex: -1
         };
-    },
-    watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        }
     },
     beforeUnmount() {
         this.destroyStyle();

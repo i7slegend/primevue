@@ -57,7 +57,7 @@ import Button from 'primevue/button';
 import PlusIcon from 'primevue/icons/plus';
 import Ripple from 'primevue/ripple';
 import Tooltip from 'primevue/tooltip';
-import { DomHandler, UniqueComponentId } from 'primevue/utils';
+import { DomHandler, useUniqueId } from 'primevue/utils';
 import BaseSpeedDial from './BaseSpeedDial.vue';
 
 export default {
@@ -68,9 +68,15 @@ export default {
     documentClickListener: null,
     container: null,
     list: null,
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     data() {
         return {
-            id: this.$attrs.id,
             d_visible: this.visible,
             isItemClicked: false,
             focused: false,
@@ -78,12 +84,6 @@ export default {
         };
     },
     watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        },
         visible(newValue) {
             this.d_visible = newValue;
         }

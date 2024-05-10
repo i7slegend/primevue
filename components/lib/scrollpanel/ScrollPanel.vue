@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { DomHandler, UniqueComponentId } from 'primevue/utils';
+import { DomHandler, useUniqueId } from 'primevue/utils';
 import BaseScrollPanel from './BaseScrollPanel.vue';
 
 export default {
@@ -60,21 +60,19 @@ export default {
     lastPageY: null,
     timer: null,
     outsideClickListener: null,
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     data() {
         return {
-            id: this.$attrs.id,
             orientation: 'vertical',
             lastScrollTop: 0,
             lastScrollLeft: 0
         };
-    },
-    watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        }
     },
     mounted() {
         if (this.$el.offsetParent) {

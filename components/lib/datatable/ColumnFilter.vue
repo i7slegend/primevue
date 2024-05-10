@@ -162,7 +162,7 @@ import PlusIcon from 'primevue/icons/plus';
 import TrashIcon from 'primevue/icons/trash';
 import OverlayEventBus from 'primevue/overlayeventbus';
 import Portal from 'primevue/portal';
-import { ConnectedOverlayScrollHandler, DomHandler, UniqueComponentId, ZIndexUtils } from 'primevue/utils';
+import { ConnectedOverlayScrollHandler, DomHandler, ZIndexUtils, useUniqueId } from 'primevue/utils';
 import { mergeProps } from 'vue';
 
 export default {
@@ -170,6 +170,13 @@ export default {
     hostName: 'DataTable',
     extends: BaseComponent,
     emits: ['filter-change', 'filter-apply', 'operator-change', 'matchmode-change', 'constraint-add', 'constraint-remove', 'filter-clear', 'apply-click'],
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     props: {
         field: {
             type: String,
@@ -279,19 +286,10 @@ export default {
     },
     data() {
         return {
-            id: this.$attrs.id,
             overlayVisible: false,
             defaultMatchMode: null,
             defaultOperator: null
         };
-    },
-    watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        }
     },
     overlay: null,
     selfClick: false,

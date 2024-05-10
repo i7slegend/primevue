@@ -63,9 +63,9 @@
 import BaseComponent from 'primevue/basecomponent';
 import TimesIcon from 'primevue/icons/times';
 import Ripple from 'primevue/ripple';
-import { UniqueComponentId } from 'primevue/utils';
 import GalleriaItem from './GalleriaItem.vue';
 import GalleriaThumbnails from './GalleriaThumbnails.vue';
+import { useUniqueId } from 'primevue/utils';
 
 export default {
     name: 'GalleriaContent',
@@ -74,21 +74,21 @@ export default {
     inheritAttrs: false,
     interval: null,
     emits: ['activeitem-change', 'mask-hide'],
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     data() {
         return {
-            id: this.$attrs.id,
             activeIndex: this.$attrs.activeIndex,
             numVisible: this.$attrs.numVisible,
             slideShowActive: false
         };
     },
     watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        },
         '$attrs.value': function (newVal) {
             if (newVal && newVal.length < this.numVisible) {
                 this.numVisible = newVal.length;

@@ -36,7 +36,7 @@
 
 <script>
 import Portal from 'primevue/portal';
-import { DomHandler, ObjectUtils, UniqueComponentId, ZIndexUtils } from 'primevue/utils';
+import { DomHandler, ObjectUtils, ZIndexUtils, useUniqueId } from 'primevue/utils';
 import BaseContextMenu from './BaseContextMenu.vue';
 import ContextMenuSub from './ContextMenuSub.vue';
 
@@ -53,9 +53,15 @@ export default {
     pageY: null,
     container: null,
     list: null,
+    setup() {
+        const { id } = useUniqueId();
+
+        return {
+            id
+        }
+    },
     data() {
         return {
-            id: this.$attrs.id,
             focused: false,
             focusedItemInfo: { index: -1, level: 0, parentKey: '' },
             activeItemPath: [],
@@ -64,12 +70,6 @@ export default {
         };
     },
     watch: {
-        '$attrs.id': {
-            immediate: true,
-            handler: function (newValue) {
-                this.id = newValue || UniqueComponentId();
-            }
-        },
         activeItemPath(newPath) {
             if (ObjectUtils.isNotEmpty(newPath)) {
                 this.bindOutsideClickListener();
